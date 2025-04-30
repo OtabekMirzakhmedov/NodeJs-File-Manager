@@ -2,6 +2,15 @@ import { createInterface } from 'readline';
 import { homedir } from 'os';
 import { chdir } from 'process';
 import {changeDirectory, goUp, listDirectory} from "./src/NavigationOperations/index.js";
+import {
+    copyFile,
+    createDirectory,
+    createFile,
+    deleteFile,
+    moveFile,
+    readFile,
+    renameFile
+} from "./src/fileOperations/index.js";
 
 const args = process.argv.slice(2);
 const usernameArg = args.find(arg => arg.startsWith('--username='));
@@ -30,7 +39,7 @@ process.on('SIGINT', () => {
 
 rl.prompt();
 
-rl.on('line', (line) => {
+rl.on('line', async (line) => {
     const input = line.trim();
 
     const [command, ...args] = input.split(' ');
@@ -59,7 +68,67 @@ rl.on('line', (line) => {
                 listDirectory();
                 break;
 
+            case 'cat':
+                if (!argument) {
+                    console.log('Invalid input');
+                    break;
+                }
+                await readFile(argument);
+                break;
 
+            case 'add':
+                if (!argument) {
+                    console.log('Invalid input');
+                    break;
+                }
+                await createFile(argument);
+                break;
+
+            case 'mkdir':
+                if (!argument) {
+                    console.log('Invalid input');
+                    break;
+                }
+                await createDirectory(argument);
+                break;
+
+            case 'rn':
+                if (args.length < 2) {
+                    console.log('Invalid input');
+                    break;
+                }
+                const oldPath = args[0];
+                const newName = args.slice(1).join(' ');
+                await renameFile(oldPath, newName);
+                break;
+
+            case 'cp':
+                if (args.length < 2) {
+                    console.log('Invalid input');
+                    break;
+                }
+                const sourcePath = args[0];
+                const destPath = args.slice(1).join(' ');
+                await copyFile(sourcePath, destPath);
+                break;
+
+            case 'mv':
+                if (args.length < 2) {
+                    console.log('Invalid input');
+                    break;
+                }
+                const mvSourcePath = args[0];
+                const mvDestPath = args.slice(1).join(' ');
+                await moveFile(mvSourcePath, mvDestPath);
+                break;
+
+            case 'rm':
+                if (!argument) {
+                    console.log('Invalid input');
+                    break;
+                }
+                await deleteFile(argument);
+                break;
             default:
                 console.log('Invalid input');
                 break;
