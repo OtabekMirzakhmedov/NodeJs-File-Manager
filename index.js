@@ -11,6 +11,7 @@ import {
     readFile,
     renameFile
 } from "./src/fileOperations/index.js";
+import {getArchitecture, getCPUs, getEOL, getHomeDir, getUsername} from "./src/osOperations/index.js";
 
 const args = process.argv.slice(2);
 const usernameArg = args.find(arg => arg.startsWith('--username='));
@@ -129,6 +130,33 @@ rl.on('line', async (line) => {
                 }
                 await deleteFile(argument);
                 break;
+
+            case 'os':
+                if (args.length === 0 || args[0] !== '--EOL' && args[0] !== '--cpus' &&
+                    args[0] !== '--homedir' && args[0] !== '--username' && args[0] !== '--architecture') {
+                    console.log('Invalid input');
+                    break;
+                }
+
+                switch (args[0]) {
+                    case '--EOL':
+                        await getEOL();
+                        break;
+                    case '--cpus':
+                        await getCPUs();
+                        break;
+                    case '--homedir':
+                        await getHomeDir();
+                        break;
+                    case '--username':
+                        await getUsername();
+                        break;
+                    case '--architecture':
+                        await getArchitecture();
+                        break;
+                }
+                break;
+
             default:
                 console.log('Invalid input');
                 break;
