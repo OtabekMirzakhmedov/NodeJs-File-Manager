@@ -13,6 +13,7 @@ import {
 } from "./src/fileOperations/index.js";
 import {getArchitecture, getCPUs, getEOL, getHomeDir, getUsername} from "./src/osOperations/index.js";
 import {calculateHash} from "./src/hashOperations/index.js";
+import {compressFile, decompressFile} from "./src/compressionOperations/index.js";
 
 const args = process.argv.slice(2);
 const usernameArg = args.find(arg => arg.startsWith('--username='));
@@ -164,6 +165,26 @@ rl.on('line', async (line) => {
                     break;
                 }
                 await calculateHash(argument);
+                break;
+
+            case 'compress':
+                if (args.length < 2) {
+                    console.log('Invalid input');
+                    break;
+                }
+                const compressSource = args[0];
+                const compressDest = args.slice(1).join(' ');
+                await compressFile(compressSource, compressDest);
+                break;
+
+            case 'decompress':
+                if (args.length < 2) {
+                    console.log('Invalid input');
+                    break;
+                }
+                const decompressSource = args[0];
+                const decompressDest = args.slice(1).join(' ');
+                await decompressFile(decompressSource, decompressDest);
                 break;
 
             default:
