@@ -1,7 +1,7 @@
 import { createInterface } from 'readline';
 import { homedir } from 'os';
 import { chdir } from 'process';
-import {changeDirectory, goUp} from "./src/FilesNavigation.js";
+import {changeDirectory, goUp, listDirectory} from "./src/NavigationOperations/index.js";
 
 const args = process.argv.slice(2);
 const usernameArg = args.find(arg => arg.startsWith('--username='));
@@ -53,6 +53,10 @@ rl.on('line', (line) => {
                     break;
                 }
                 changeDirectory(argument);
+                break;
+
+            case 'ls':
+                listDirectory();
                 break;
 
 

@@ -1,23 +1,6 @@
 import path from 'path';
 import fs from 'fs';
 
-export const goUp = () => {
-    try {
-        const currentDir = process.cwd();
-        const parentDir = path.dirname(currentDir);
-
-        if (parentDir === currentDir) {
-            return true;
-        }
-
-        process.chdir(parentDir);
-        return true;
-    } catch (error) {
-        console.error('Operation failed');
-        return false;
-    }
-};
-
 export const changeDirectory = (targetPath) => {
     try {
         const resolvedPath = path.resolve(process.cwd(), targetPath);
