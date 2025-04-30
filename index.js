@@ -1,6 +1,7 @@
 import { createInterface } from 'readline';
 import { homedir } from 'os';
 import { chdir } from 'process';
+import {changeDirectory, goUp} from "./src/FilesNavigation.js";
 
 const args = process.argv.slice(2);
 const usernameArg = args.find(arg => arg.startsWith('--username='));
@@ -29,12 +30,38 @@ process.on('SIGINT', () => {
 
 rl.prompt();
 
-rl.on('line', async (line) => {
+rl.on('line', (line) => {
     const input = line.trim();
 
-    if (input === '.exit') {
-        console.log(`Thank you for using File Manager, ${username}, goodbye!`);
-        process.exit();
+    const [command, ...args] = input.split(' ');
+    const argument = args.join(' '); // Rejoin in case path has spaces
+
+    try {
+        switch (command) {
+            case '.exit':
+                console.log(`Thank you for using File Manager, ${username}, goodbye!`);
+                process.exit();
+                break;
+
+            case 'up':
+                goUp();
+                break;
+
+            case 'cd':
+                if (!argument) {
+                    console.log('Invalid input');
+                    break;
+                }
+                changeDirectory(argument);
+                break;
+
+
+            default:
+                console.log('Invalid input');
+                break;
+        }
+    } catch (error) {
+        console.log('Operation failed');
     }
 
     console.log(`You are currently in ${process.cwd()}`);
