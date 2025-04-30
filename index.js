@@ -12,6 +12,7 @@ import {
     renameFile
 } from "./src/fileOperations/index.js";
 import {getArchitecture, getCPUs, getEOL, getHomeDir, getUsername} from "./src/osOperations/index.js";
+import {calculateHash} from "./src/hashOperations/index.js";
 
 const args = process.argv.slice(2);
 const usernameArg = args.find(arg => arg.startsWith('--username='));
@@ -155,6 +156,14 @@ rl.on('line', async (line) => {
                         await getArchitecture();
                         break;
                 }
+                break;
+
+            case 'hash':
+                if (!argument) {
+                    console.log('Invalid input');
+                    break;
+                }
+                await calculateHash(argument);
                 break;
 
             default:
