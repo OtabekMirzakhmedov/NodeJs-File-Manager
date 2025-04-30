@@ -1,0 +1,21 @@
+{
+  "name": "nodejs-file-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OtabekMirzakhmedov/NodeJs-File-Manager.git"
+  },
+  "keywords": [],
+  "author": "OtabekMirzakhmedov",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/OtabekMirzakhmedov/NodeJs-File-Manager/issues"
+  },
+  "homepage": "https://github.com/OtabekMirzakhmedov/NodeJs-File-Manager#readme",
+  "description": "This is NodeJs File Manager"
+}
